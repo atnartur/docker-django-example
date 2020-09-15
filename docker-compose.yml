@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  app:
+    image: docker-django:latest
+    build: .
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on: 
+      - django-db
+    environment:
+      DB_HOST: django-db 
+
+  django-db:
+    image: postgres:13-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
